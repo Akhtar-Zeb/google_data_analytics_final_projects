@@ -122,7 +122,35 @@ def transactions(inputfile):
                 writer.writerow(line + [""])
 
 def transactions_bonus(inputfile):
-    pass
+    # Save output file to clean_data folder
+    output_file = f"clean_data/transactions_bonus_clean.csv"
+
+    # Create Empty list for clean data
+    clean_data = []
+    # Open file with read mode
+    with open(inputfile, "r") as infile:
+        # Perse file line by line
+        for line in infile:
+            # Split line by two are more space
+            parts = re.split(r'\s{2,}', line.strip())
+
+            # append parts to list
+            clean_data.append(parts)
+    
+    # Open file for write mode
+    with open(output_file, "w") as outfile:
+        writer = csv.writer(outfile, lineterminator='\n')
+        # Give file a Header row
+        writer.writerow(["customer_id", "product_id", "unit_sale_bonus", "product_rate", "total_amount"])
+
+        # Parse clean data list
+        for line in clean_data:
+            # check if line is greater or equal to 3 parts if it is only write three parts
+            if len(line) >= 3:
+                writer.writerow(line[:6])
+            # check if line equal to two then add empty field
+            elif len(line) == 5:
+                writer.writerow(line + [""])
 
 def transactions_return(inputfile):
     pass
