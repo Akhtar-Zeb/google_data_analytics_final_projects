@@ -1,13 +1,14 @@
+import os
 import sys
 import re
 import csv
 
 def main():
     # Ask for file path
-    input_file = input("Enter file path: ")
+    input_file = input("Enter file path: ").strip()
     # Split file path and name
-    parts = input_file.split("/")
-    file_path, file_name = parts
+    file_name = os.path.basename(input_file)
+
     # Check name and send it to specific function
     if file_name == "CUST.txt":
         customers(input_file)
@@ -21,6 +22,8 @@ def main():
         
 # Clean customer(CUST.txt) text file
 def customers(inputfile):
+    # make sure folder is exist
+    os.makedirs("clean_data_using_powerquary", exist_ok=True)
     # Save output file to clean_data folder
     output_file = f"clean_data_using_powerquary/customers_clean.csv"
 
@@ -54,6 +57,8 @@ def customers(inputfile):
                 writer.writerow([line[0].strip(), line[1].strip(), ""])
 
 def products(inputfile):
+    # make sure folder is exist
+    os.makedirs("clean_data_using_powerquary", exist_ok=True)
     # Save output file to clean_data folder
     output_file = f"clean_data_using_powerquary/products_clean.csv"
 
@@ -85,6 +90,8 @@ def products(inputfile):
                 writer.writerow(line + [""])
 
 def transactions(inputfile):
+    # make sure folder is exist
+    os.makedirs("clean_data_using_powerquary", exist_ok=True)
     # Save output file to clean_data folder
     output_file = f"clean_data_using_powerquary/transactions_clean.csv"
 
