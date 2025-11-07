@@ -1,4 +1,4 @@
-# Prapare Data & Process Data
+# Prapare & Process Data
 
 ## Using Python
 I write a Python script for this it do the following thinks.
