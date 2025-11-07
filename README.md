@@ -23,4 +23,6 @@ Result: Clean, perfectly aligned CSV - ready for Excel or SQl
 
 ### First use python script and  SQLite3 to enter clean data to database for furthur prossing
 * I Create SQLite3 Database then create table acording to data.
-* Here i use python script to to insert data to SQLite3 table
+* Here i use python script to insert data to SQLLite3 table.
+* I process the data in SQL for NULL, EMPTY ROW, NILL and remove it.
+* Now the data is clean
