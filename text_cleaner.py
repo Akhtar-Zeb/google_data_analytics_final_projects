@@ -88,13 +88,10 @@ def products(inputfile):
                 continue
             # Validate Data
             if not line[0].isdigit():
-                print(line)
                 continue
-            if line[2] == "NILL" or line[2].strip == "":
-                print(line)
+            if line[2] == "NILL" or line[2].strip == "0":
                 continue
-            if not line[2].isdigit() or line[2] == "0":
-                print(line)
+            if not line[2].isdigit() or line[2] == 0:
                 continue
             # check if line is greater or equal to 3 parts if it is only write three parts
             if len(line) >= 3:
