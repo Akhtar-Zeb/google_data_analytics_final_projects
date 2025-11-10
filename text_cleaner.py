@@ -1,13 +1,30 @@
 import os
-import sys
 import re
 import csv
 
-def main():
-    file_path = input("Enter file path: ").strip()
-    # Split file path and name
-    file_name = os.path.basename(file_path)
+# Company name list
+company_list = ["stanley", "usawa", "azmat", "organic",]
 
+while True:
+    # Prompt for company name
+    company_name = input("Enter company name: ").strip().lower()
+    if company_name in company_list:
+        break
+    else:
+        print(f"Company {company_name} not in list.")
+
+files_list = ["CUST.txt", "PROD.txt", "TRANBNS.txt", "TRANBSRET.txt", "TRANS.txt", "TRANSRET.txt"]
+
+while True:
+    #Prompt for file name
+    file_name = input("Enter file name: ").strip()
+    if file_name in files_list:
+        break
+    else:
+        print(f"File {file_name} not in list.")
+
+def main():
+    file_path = f"dirty_data/{company_name}/{file_name}"
     # Check name and send it to specific function
     if file_name == "CUST.txt":
         customers(file_path)
@@ -18,13 +35,13 @@ def main():
     else:
         print("File not found.")
 
-        
 # Clean customer(CUST.txt) text file
 def customers(inputfile):
     # make sure folder is exist
     os.makedirs("clean_data", exist_ok=True)
+    os.makedirs(f"clean_data/{company_name}", exist_ok=True)
     # Save output file to clean_data folder
-    output_file = f"clean_data/customers_clean.csv"
+    output_file = f"clean_data/{company_name}/customers_clean.csv"
 
     # Create Empty list for clean data
     clean_data = []
@@ -59,11 +76,11 @@ def customers(inputfile):
                 writer.writerow([line[0].strip(), line[1].strip(), ""])
 
 def products(inputfile):
-    company_name = input("Enter company name: ").strip().title()
     # make sure folder is exist
     os.makedirs("clean_data", exist_ok=True)
+    os.makedirs(f"clean_data/{company_name}", exist_ok=True)
     # Save output file to clean_data folder
-    output_file = f"clean_data/products_clean.csv"
+    output_file = f"clean_data/{company_name}/products_clean.csv"
 
     # Create Empty list for clean data
     clean_data = []
@@ -95,18 +112,19 @@ def products(inputfile):
                 continue
             # check if line is greater or equal to 3 parts if it is only write three parts
             if len(line) >= 3:
-                writer.writerow([line[0], f'{company_name}', line[1].title(), line[2]])
+                writer.writerow([line[0], f'{company_name.title()}', line[1].title(), line[2]])
             # check if line equal to two then add empty field
             elif len(line) == 2:
-                writer.writerow([line[0], f'{company_name}', line[1].title(), ""])
+                writer.writerow([line[0], f'{company_name.title()}', line[1].title(), ""])
 
 def transactions(inputfile):
-    month = input("Enter month of data Example: 'jan': ").strip().title()
+    month = input("Enter month of data Example: 'jan': ").strip()
     year = input("Enter year of data Example: '2025': ").strip()
     # make sure folder is exist
     os.makedirs("clean_data", exist_ok=True)
+    os.makedirs(f"clean_data/{company_name}", exist_ok=True)
     # Save output file to clean_data folder
-    output_file = f"clean_data/transactions_clean.csv"
+    output_file = f"clean_data/{company_name}/transactions_clean.csv"
 
     # Create Empty list for clean data
     clean_data = []
@@ -124,7 +142,7 @@ def transactions(inputfile):
     with open(output_file, "w") as outfile:
         writer = csv.writer(outfile, lineterminator='\n')
         # Give file a Header row
-        writer.writerow(["customer_id", "product_id", "sale_month", "sale_year" "unit_sale", "product_rate", "total_amount"])
+        writer.writerow(["customer_id", "product_id", "sale_month", "sale_year", "unit_sale", "product_rate", "total_amount"])
 
         # Parse clean data list
         for line in clean_data:
@@ -132,12 +150,11 @@ def transactions(inputfile):
             if not any(char.isdigit() for char in line):
                 continue
             # check if line is greater or equal to 3 parts if it is only write three parts
-            if len(line) >= 6:
-                writer.writerow([line[0], line[1], f'{month}', f'{year}', line[2], line[3], line[4], line[5]])
+            if len(line) >= 5:
+                writer.writerow([line[0], line[1], f'{month.title()}', f'{year}', line[2], line[3], line[4]])
             # check if line equal to two then add empty field
-            elif len(line) == 5:
-                writer.writerow([line[0], line[1], f'{month}', f'{year}', line[2], line[3], line[4], ""])
-
+            elif len(line) == 4:
+                writer.writerow([line[0], line[1], f'{month.title()}', f'{year}', line[2], line[3], ""])
 
 
 if __name__ == "__main__":

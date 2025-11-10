@@ -43,7 +43,7 @@ def add_product(file):
         reader = csv.reader(f)
         next(reader)
         for row in reader:
-            cur.execute("INSERT INTO products(product_id, product_name, product_rate) VALUES (?, ?, ?);", row)
+            cur.execute("INSERT INTO products(product_id, company_name, product_name, product_rate) VALUES (?, ?, ?, ?);", row)
 
 
     conn.commit()
@@ -59,7 +59,7 @@ def add_transaction(file):
         reader = csv.reader(f)
         next(reader)
         for row in reader:
-            cur.execute("INSERT INTO transactions(customer_id, product_id, unit_sales, product_rate, total_sale) VALUES (?, ?, ?, ?, ?);", row[:5])
+            cur.execute("INSERT INTO transactions(customer_id, product_id, sale_month, sale_year, unit_sales, product_rate, total_sale) VALUES (?, ?, ?, ?, ?, ?, ?);", row[:5])
 
 
     conn.commit()

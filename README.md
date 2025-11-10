@@ -58,7 +58,7 @@ CREATE TABLE transactions (
     sale_year TEXT NOT NULL,
     unit_sales INTEGER,
     product_rate REAL,
-    total_sale REAL,
+    total_amount REAL,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
