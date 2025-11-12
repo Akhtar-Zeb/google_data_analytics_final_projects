@@ -19,7 +19,7 @@ def main():
 
 
 def add_customer(file):
-    conn = sqlite3.connect("watan.db")
+    conn = sqlite3.connect("sales.db")
     cur = conn.cursor()
 
     with open(file, "r") as f:
@@ -36,7 +36,7 @@ def add_customer(file):
     conn.close()
 
 def add_product(file):
-    conn = sqlite3.connect("watan.db")
+    conn = sqlite3.connect("sales.db")
     cur = conn.cursor()
 
     with open(file, "r") as f:
@@ -52,14 +52,14 @@ def add_product(file):
     conn.close()
 
 def add_transaction(file):
-    conn = sqlite3.connect("watan.db")
+    conn = sqlite3.connect("sales.db")
     cur = conn.cursor()
 
     with open(file, "r") as f:
         reader = csv.reader(f)
         next(reader)
         for row in reader:
-            cur.execute("INSERT INTO transactions(customer_id, product_id, sale_month, sale_year, unit_sales, product_rate, total_sale) VALUES (?, ?, ?, ?, ?, ?, ?);", row[:5])
+            cur.execute("INSERT INTO transactions(customer_id, product_id, sale_month, sale_year, unit_sales, product_rate, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?);", row[:8])
 
 
     conn.commit()

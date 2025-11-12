@@ -32,6 +32,12 @@ def main():
         products(file_path)
     elif file_name == "TRANS.txt":
         transactions(file_path)
+    elif file_name == "TRANBNS.txt":
+        transactions_bonus(file_path)
+    elif file_name == "TRANSRET.txt":
+        transactions_return(file_path)
+    elif file_name == "TRANBSRET.txt":
+        transactions_bonus_return(file_path)
     else:
         print("File not found.")
 
@@ -156,6 +162,48 @@ def transactions(inputfile):
             elif len(line) == 4:
                 writer.writerow([line[0], line[1], f'{month.title()}', f'{year}', line[2], line[3], ""])
 
+def transactions_bonus(inputfile):
+    month = input("Enter month of data Example: 'jan': ").strip()
+    year = input("Enter year of data Example: '2025': ").strip()
+    # make sure folder is exist
+    os.makedirs("clean_data", exist_ok=True)
+    os.makedirs(f"clean_data/{company_name}", exist_ok=True)
+    # Save output file to clean_data folder
+    output_file = f"clean_data/{company_name}/transactions_bonus_clean.csv"
 
+    # Create Empty list for clean data
+    clean_data = []
+    # Open file with read mode
+    with open(inputfile, "r") as infile:
+        # Perse file line by line
+        for line in infile:
+            # Split line by two are more space
+            parts = re.split(r'\s{2,}', line.strip())
+            # append parts to list
+            clean_data.append(parts)
+    
+    # Open file for write mode
+    with open(output_file, "w") as outfile:
+        writer = csv.writer(outfile, lineterminator='\n')
+        # Give file a Header row
+        writer.writerow(["customer_id", "product_id", "sale_month", "sale_year", "unit_return", "product_rate", "total_return_amount"])
+
+        # Parse clean data list
+        for line in clean_data:
+            # Validate data
+            if not any(char.isdigit() for char in line):
+                continue
+            # check if line is greater or equal to 3 parts if it is only write three parts
+            if len(line) >= 5:
+                writer.writerow([line[0], line[1], f'{month.title()}', f'{year}', line[2], line[3], line[4]])
+            # check if line equal to two then add empty field
+            elif len(line) == 4:
+                writer.writerow([line[0], line[1], f'{month.title()}', f'{year}', line[2], line[3], ""])
+
+def transactions_return(inputfile):
+    pass
+
+def transactions_bonus_return(inputfile):
+    pass
 if __name__ == "__main__":
     main()
